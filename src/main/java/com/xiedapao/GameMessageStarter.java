@@ -9,8 +9,21 @@ import com.xiedapao.netty.NettyChatServer;
 public class GameMessageStarter {
 
     public static void main(String[] args) {
-        Config.loadConfig("prod");
+        Config.loadConfig(getActiveFromArgs(args));
         new NettyChatServer().start();
+    }
+
+    private static String getActiveFromArgs(String[] args) {
+        String active = "prod";
+        if (args != null && args.length > 0) {
+            for (String arg : args) {
+                if (arg.contains("--active=")) {
+                    active = arg.replace("--active=", "");
+                    return active;
+                }
+            }
+        }
+        return active;
     }
 
 }

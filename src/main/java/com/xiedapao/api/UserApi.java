@@ -16,4 +16,10 @@ public class UserApi {
         return HttpClientUtil.checkReturnStatus(HttpClientUtil.post("/user/logout", prm));
     }
 
+    public static boolean syncUserOnlineStatus(String userIds) {
+        Map<String, Object> prm = new HashMap<>();
+        prm.put("userIds", userIds);
+        return HttpClientUtil.checkReturnStatus(HttpClientUtil.post("/user/syncUserOnlineStatus", prm));
+    }
+
 }

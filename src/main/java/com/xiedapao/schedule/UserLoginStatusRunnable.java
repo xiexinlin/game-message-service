@@ -1,13 +1,11 @@
 package com.xiedapao.schedule;
 
+import com.xiedapao.api.UserApi;
 import com.xiedapao.netty.NettyChatServerHandler;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author xxl 2022/5/17
@@ -23,11 +21,18 @@ public class UserLoginStatusRunnable implements Runnable {
 
     @Override
     public void run() {
-        log.info("循环同步用户登录状态！");
+        log.info("循环同步用户登录状态-开始！");
         Map<Integer, Channel> clientChannelMap = nettyChatServerHandler.getClientChannelMap();
-        for (Integer userId : clientChannelMap.keySet()) {
-
+        if (clientChannelMap.isEmpty()) {
+            log.info("没有需要同步的用户！");
+            return;
         }
+        StringBuilder userIds = new StringBuilder();
+        for (Integer userId : clientChannelMap.keySet()) {
+            userIds.append(userId).append(",");
+        }
+        UserApi.syncUserOnlineStatus(userIds.substring(0, userIds.length() - 1));
+        log.info("循环同步用户登录状态-结束！");
     }
 
 }

@@ -13,7 +13,7 @@ public class Config {
 
     public static int port;
     public static int readOutTime;
-    public static String serverUrl;
+    public static String gameServerUrl;
     public static String active;
 
     public static void loadConfig(String activeArg) {
@@ -25,7 +25,7 @@ public class Config {
 
             port = NumberUtil.parseInt(properties.getProperty("port"));
             readOutTime = NumberUtil.parseInt(properties.getProperty("read_out_time"));
-            serverUrl = properties.getProperty("hero_game_service_url");
+            gameServerUrl = properties.getProperty("hero_game_service_url");
         } catch (Exception e) {
             e.printStackTrace();
         }
