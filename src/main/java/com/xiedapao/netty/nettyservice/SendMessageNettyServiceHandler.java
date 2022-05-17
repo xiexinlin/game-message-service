@@ -1,6 +1,7 @@
 package com.xiedapao.netty.nettyservice;
 
 
+import com.xiedapao.api.FriendApi;
 import com.xiedapao.enumeration.ServerEventEnum;
 import com.xiedapao.netty.base.Message;
 import com.xiedapao.netty.base.NettyData;
@@ -38,21 +39,13 @@ public class SendMessageNettyServiceHandler implements NettyServiceHandler {
         Date date = new Date();
         date.setTime(timestamp);
 
-//        SendMessageRequest sendMessageRequest = new SendMessageRequest();
-//        sendMessageRequest.setUserId(userId);
-//        sendMessageRequest.setFriendId(friendId);
-//        sendMessageRequest.setMessage(StringUtil.toString(data.get("message")));
-//        sendMessageRequest.setMessageType(NumberUtil.parseInt(data.get("messageType")));
-//        sendMessageRequest.setCreateTime(date);
-//        sendMessageRequest.setTimestamp(timestamp);
-//        sendMessageRequest.setFactionId(NumberUtil.parseInt(data.get("factionId")));
-//        threadService.sendChatMessage(sendMessageRequest); //异步存储到数据库
-
         Channel friendChannel = channelMap.get(friendId);
         if (friendChannel != null) {
             NettyData send = new NettyData(ServerEventEnum.CHAT.getService(), map);
             Message message = new Message(send.toJsonString());
             friendChannel.writeAndFlush(message);
         }
+        map.put("createTime", date);
+        FriendApi.sendMessage(map);
     }
 }

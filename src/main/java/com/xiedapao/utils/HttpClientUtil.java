@@ -110,6 +110,7 @@ public class HttpClientUtil {
         httpPost.setEntity(formEntity);
         // 设置请求头
         httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data");
+        httpPost.setHeader("service-name", "game-message-service");
 
         return execute(httpClient, httpPost);
     }

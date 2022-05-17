@@ -3,7 +3,6 @@ package com.xiedapao.config;
 import com.xiedapao.GameMessageStarter;
 import com.xiedapao.utils.NumberUtil;
 
-
 import java.util.Properties;
 
 /**
@@ -12,6 +11,7 @@ import java.util.Properties;
  */
 public class Config {
 
+    public static int port;
     public static int readOutTime;
     public static String serverUrl;
     public static String active;
@@ -23,8 +23,8 @@ public class Config {
             properties.load(GameMessageStarter.class.getResourceAsStream("/game-config.properties"));
             properties.load(GameMessageStarter.class.getResourceAsStream("/game-config-" + active + ".properties"));
 
+            port = NumberUtil.parseInt(properties.getProperty("port"));
             readOutTime = NumberUtil.parseInt(properties.getProperty("read_out_time"));
-
             serverUrl = properties.getProperty("hero_game_service_url");
         } catch (Exception e) {
             e.printStackTrace();
